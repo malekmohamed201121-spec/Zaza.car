@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZAZA CAR - 
+لايجار السيارات</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+.music-btn{position:fixed;bottom:90px;right:20px;z-index:1000;background:#FFD700;color:#000;border:none;border-radius:50%;width:50px;height:50px;font-size:22px;cursor:pointer;box-shadow:0 0 15px rgba(255,215,0,0.5);transition:0.3s}
+.music-btn.off{opacity:0.5;transform:scale(0.9)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}body{background:#000;color:#fff;padding-bottom:80px}html{scroll-behavior:smooth}
+.header{width:100%;height:450px;background:url('https://i.postimg.cc/zy0nFLpc/bg.jpg') center/cover fixed no-repeat;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;animation:zoomBg 20s infinite alternate}
+@keyframes zoomBg{from{background-size:100%}to{background-size:110%}}
+.header::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,#000,rgba(0,0,0,0.3))}
+.header h1{position:relative;z-index:2;font-size:55px;color:#FFD700;letter-spacing:3px;font-weight:900;text-shadow:0 0 20px rgba(255,215,0,0.5)}
+.header p{position:relative;z-index:2;font-size:16px;color:#ccc;margin-top:8px}
+.tools{background:#0a0a0a;padding:15px;position:sticky;top:0;z-index:100;backdrop-filter:blur(5px)}
+.search-box{max-width:500px;margin:0 auto 10px;position:relative}
+.search-box input{width:100%;padding:10px 15px;border-radius:25px;border:1px solid #333;background:#111;color:#fff;font-size:14px;outline:none}
+.search-box input:focus{border-color:#FFD700}
+.filters{text-align:center;display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.filters button{background:#000;color:#FFD700;border:1px solid #FFD700;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;transition:0.3s}
+.filters button:hover,.filters button.active{background:#FFD700;color:#000;transform:translateY(-2px)}
+.main-content{display:flex;gap:20px;padding:20px 15px;max-width:1400px;margin:auto}
+.contact-box{width:250px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;position:sticky;top:120px;height:fit-content}
+.btn{display:block;text-align:center;text-decoration:none;font-weight:700;padding:12px 8px;border-radius:6px;font-size:13px;transition:0.3s}
+.btn:hover{transform:translateX(-3px)}
+.btn-facetime{background:#00C853;color:#fff}
+.btn-snap{background:#FFEB3B;color:#000}
+.btn-whatsapp{background:#00C853;color:#fff}
+.btn-call{background:#FFD700;color:#000}
+.gallery{flex:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.car-card{background:#111;border-radius:10px;overflow:hidden;transition:all 0.3s ease;border:1px solid #222;display:none;cursor:pointer;position:relative}
+.car-card.show{display:block;animation:fadeInUp 0.5s ease}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.car-card:hover{transform:translateY(-8px);border-color:#FFD700;box-shadow:0 10px 20px rgba(255,215,0,0.1)}
+.badge{position:absolute;top:10px;right:10px;background:#FFD700;color:#000;padding:4px 10px;font-size:10px;font-weight:900;border-radius:15px;z-index:3}
+.badge.new{background:#00C853;color:#fff}
+.badge.video{background:#FF0000;color:#fff}
+.badge.popular{background:#FFD700;color:#000;right:80px}
+.car-card img,.car-card iframe{width:100%;height:220px;object-fit:cover;background:#000;display:block;transition:0.4s;border:0}
+.car-card:hover img{transform:scale(1.05)}
+.video-thumb{position:relative;cursor:pointer}
+.video-thumb::after{content:'▶';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:50px;color:#fff;background:rgba(0,0,0,0.6);width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:0.3s}
+.video-thumb:hover::after{background:rgba(255,0,0,0.8);transform:translate(-50%,-50%) scale(1.1)}
+.car-info{padding:15px;text-align:center;position:relative}
+.car-info h3{color:#FFD700;font-size:17px;margin-bottom:5px}
+.tag{font-size:11px;padding:4px 12px;border-radius:15px;display:inline-block;background:rgba(0,200,83,0.2);color:#00C853;border:1px solid #00C853}
+.tag.popular{background:rgba(255,215,0,0.2);color:#FFD700;border:1px solid #FFD700}
+.btn-car{display:block;background:#FFD700;color:#000;padding:10px;border-radius:5px;text-decoration:none;font-weight:700;font-size:13px;margin-top:10px;transition:0.3s;cursor:pointer;border:none;width:100%}
+.btn-car:hover{background:#fff;transform:scale(1.02)}
+.contact-menu{display:none;position:absolute;bottom:50px;left:50%;transform:translateX(-50%);background:#222;border:1px solid #FFD700;border-radius:8px;padding:8px;width:90%;z-index:10;box-shadow:0 5px 15px rgba(0,0,0,0.5)}
+.contact-menu.show{display:flex;flex-direction:column;gap:6px;animation:fadeInUp 0.3s ease}
+.contact-menu a{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;border-radius:5px;text-decoration:none;font-weight:700;font-size:12px;transition:0.2s}
+.contact-menu a:hover{opacity:0.8}
+
+/* اللايت بوكس */
+.lightbox{display:none;position:fixed;z-index:1000;inset:0;background:#000;justify-content:center;align-items:center;cursor:zoom-out}
+.lightbox img{width:100vw;height:100vh;object-fit:cover}
+.lightbox.close{position:absolute;top:15px;right:20px;font-size:35px;color:#fff;cursor:pointer;transition:0.3s;z-index:9999;font-weight:300}
+.lightbox.close:hover{color:#FFD700}
+.lightbox.arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;padding:15px;transition:0.3s;user-select:none;z-index:9999}
+.lightbox.arrow:hover{color:#FFD700}
+.lightbox.prev{left:20px}.lightbox.next{right:20px}
+
+footer{background:#0a0a0a;text-align:center;padding:20px;margin-top:40px;border-top:1px solid #222;color:#888;font-size:13px}
+
+@media (max-width:900px){
+.main-content{flex-direction:column;padding-bottom:70px}
+.contact-box{width:100%;position:fixed;bottom:0;left:0;right:0;flex-direction:row;justify-content:space-around;background:#000;padding:8px;border-top:1px solid #222;z-index:999;top:auto}
+.btn{font-size:11px;padding:10px 5px;flex:1}
+.header h1{font-size:35px}
+.music-btn{bottom:70px}
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop></audio>
+<button class="music-btn off" id="musicBtn" onclick="toggleMusic()">🔇</button>
+
+<div class="header"><h1>ZAZA CAR</h1><p>تاجير السيارات</p></div>
+<div class="tools"><div class="search-box"><input type="text" id="searchInput" placeholder="ابحث عن اسم العربية..."></div><div class="filters"><button data-filter="all" class="active">الكل</button><button data-filter="mercedes">Mercedes-Benz</button><button data-filter="hyundai">Hyundai</button><button data-filter="jetour">JETOUR</button><button data-filter="range">Range Rover</button></div></div>
+<div class="main-content">
+  <div class="contact-box">
+    <a href="facetime:+201110840020" class="btn btn-facetime" target="_blank">📱 FaceTime</a>
+    <a href="https://www.snapchat.com/add/mzaza506" class="btn btn-snap" target="_blank">👻 Snapchat</a>
+    <a href="https://wa.me/201150044251?text=مرحبا ZAZA CAR" class="btn btn-whatsapp" target="_blank">💬 WhatsApp</a>
+    <a href="tel:01110840020" class="btn btn-call">📞 اتصال</a>
+  </div>
+  <div class="gallery" id="gallery">
+
+<div class="car-card mercedes show" data-name="Mercedes-Benz V-Class"><span class="badge video">فيديو</span><span class="badge popular">الاكثر طلبا</span><div class="video-thumb" onclick="playVideo(this,'q8tF_6rM_Ws')"><img src="https://i.postimg.cc/jLq2QM9C/mercedes-s.jpg" loading="lazy"></div><div class="car-info"><h3>Mercedes-Benz V-Class</h3><span class="tag popular">متاحة للإيجار</span><button class="btn-car" onclick="toggleMenu(event,'Mercedes-Benz V-Class')">تواصل للاستفسار</button><div class="contact-menu"><a href="tel:01110840020" style="background:#FFD700;color:#000">📞 اتصال</a><a href="https://wa.me/201150044251?text=عايز استفسر عن Mercedes-Benz V-Class" target="_blank" style="background:#00C853;color:#fff">💬 WhatsApp</a><a href="https://www.snapchat.com/add/mzaza506" target="_blank" style="background:#FFEB3B;color:#000">👻 Snapchat</a><a href="facetime:+201110840020" target="_blank" style="background:#00C853;color:#fff">📱 FaceTime</a></div></div></div>
+
+<div class="car-card mercedes show" data-name="Mercedes-Benz S-Class"><span class="badge video">فيديو</span><span class="badge popular">الاكثر طلبا</span><div class="video-thumb" onclick="playVideo(this,'0pKhP63KV4k')"><img src="https://i.postimg.cc/Yj9NcLw6/mercedes-s-class.jpg" loading="lazy"></div><div class="car-info"><h3>Mercedes-Benz S-Class</h3><span class="tag popular">متاحة للإيجار</span><button class="btn-car" onclick="toggleMenu(event,'Mercedes-Benz S-Class')">تواصل للاستفسار</button><div class="contact-menu"><a href="tel:01110840020" style="background:#FFD700;color:#000">📞 اتصال</a><a href="https://wa.me/201150044251?text=عايز استفسر عن Mercedes-Benz S-Class" target="_blank" style="background:#00C853;color:#fff">💬 WhatsApp</a><a href="https://www.snapchat.com/add/mzaza506" target="_blank" style="background:#FFEB3B;color:#000">👻 Snapchat</a><a href="facetime:+201110840020" target="_blank" style="background:#00C853;color:#fff">📱 FaceTime</a></div></div></div>
+
+<div class="car-card mercedes show" data-name="Mercedes E-Class"><span class="badge popular">الاكثر طلبا</span><img src="https://i.postimg.cc/wRMK3Rfz/mercedes-e.jpg" loading="lazy"><div class="car-info"><h3>Mercedes E-Class</h3><span class="tag popular">متاحة للإيجار</span><button class="btn-car" onclick="toggleMenu(event,'Mercedes E-Class')">تواصل للاستفسار</button><div class="contact-menu"><a href="tel:01110840020" style="background:#FFD700;color:#000">📞 اتصال</a><a href="https://wa.me/201150044251?text=عايز استفسر عن Mercedes E-Class" target="_blank" style="background:#00C853;color:#fff">💬 WhatsApp</a><a href="https://www.snapchat.com/add/mzaza506" target="_blank" style="background:#FFEB3B;color:#000">👻 Snapchat</a><a href="facetime:+201110840020" target="_blank" style="background:#00C853;color:#fff">📱 FaceTime</a></div></div></div>
+
+<div class="car-card mercedes show" data-name="Mercedes G-Class"><span class="badge popular">الاكثر طلبا</span><img src="https://i.postimg.cc/XZB0k54W/g-wagon.jpg" loading="lazy"><div class="car-info"><h3>Mercedes G-Class</h3><span class="tag popular">متاحة للإيجار</span><button class="btn-car" onclick="toggleMenu(event,'Mercedes G-Class')">تواصل للاستفسار</button><div class="contact-menu"><a href="tel:01110840020" style="background:#FFD700;color:#000">📞 اتصال</a><a href="https://wa.me/201150044251?text=عايز استفسر عن Mercedes G-Class" target="_blank" style="background:#00C853;color:#fff">💬 WhatsApp</a><a href="https://www.snapchat.com/add/mzaza506" target="_blank" style="background:#FFEB3B;color:#000">👻 Snapchat</a><a href="facetime:+201110840020" target="_blank" style="background:#00C853;color:#fff">📱 FaceTime</a></div></div></div>
+
+<div class="car-card hyundai show" data-name="Hyundai Tucson N-Line"><span class="badge new">جديد</span><img src="https://i.postimg.cc/GTHFntHs/photo.jpg" loading="lazy"><div class="car-info"><h3>Hyundai Tucson N-Line</h3><span class="tag">متاحة للإيجار</span><button class="btn-car" onclick="toggleMenu(event,'Hyundai Tucson N-Line')">تواصل للاستفسار</button><div class="contact-menu"><a href="tel:01110840020" style="background:#FFD700;color:#000">📞 اتصال</a><a href="https://wa.me/201150044251?text=عايز استفسر عن Hyundai Tucson N-Line" target="_blank" style="background:#00C853;color:#fff">💬 WhatsApp</a><a href="https://www.snapchat.com/add/mzaza506" target="_blank" style="background:#FFEB3B;color:#000">👻 Snapchat</a><a href="facetime:+201110840020" target="_blank" style="background:#00C853;color:#fff">📱 FaceTime</a></div></div></div>
+
+<div class="car-card hyundai show" data-name="Hyundai CN7"><span class="badge new">جديد</span><img src="https://i.postimg.cc/V5fWLb9h/CN7.jpg" loading="lazy"><div class="car-info"><h3>Hyundai CN7</h3><span class="tag">متاحة للإيجار</span><button class="btn-car" onclick="toggleMenu(event,'Hyundai CN7')">تواصل للاستفسار</button><div class="contact-menu"><a href="tel:01110840020" style="background:#FFD700;color:#000">📞 اتصال</a><a href="https://wa.me/201150044251?text=عايز استفسر عن Hyundai CN7" target="_blank" style="background:#00C853;color:#fff">💬 WhatsApp</a><a href="https://www.snapchat.com/add/mzaza506" target="_blank" style="background:#FFEB3B;color:#000">👻 Snapchat</a><a href="facetime:+201110840020" target="_blank" style="background:#00C853;color:#fff">📱 FaceTime</a></div></div></div>
+
+<div class="car-card jetour show" data-name="JETOUR T2"><span class="badge video">فيديو</span><span class="badge popular">الاكثر طلبا</span><div class="video-thumb" onclick="playVideo(this,'h5Zbiid2Q6E')"><img src="https://i.postimg.cc/tZtRF6N9/jetour-t2.jpg" loading="lazy"></div><div class="car-info"><h3>JETOUR T2</h3><span class="tag popular">متاحة للإيجار</span><button class="btn-car" onclick="toggleMenu(event,'JETOUR T2')">تواصل للاستفسار</button><div class="contact-menu"><a href="tel:01110840020" style="background:#FFD700;color:#000">📞 اتصال</a><a href="https://wa.me/201150044251?text=عايز استفسر عن JETOUR T2" target="_blank" style="background:#00C853;color:#fff">💬 WhatsApp</a><a href="https://www.snapchat.com/add/mzaza506" target="_blank" style="background:#FFEB3B;color:#000">👻 Snapchat</a><a href="facetime:+201110840020" target="_blank" style="background:#00C853;color:#fff">📱 FaceTime</a></div></div></div>
+
+<div class="car-card range show" data-name="Range Rover"><img src="https://i.postimg.cc/34B7kT3R/range.jpg" loading="lazy"><div class="car-info"><h3>Range Rover</h3><span class="tag">متاحة للإيجار</span><button class="btn-car" onclick="toggleMenu(event,'Range Rover')">تواصل للاستفسار</button><div class="contact-menu"><a href="tel:01110840020" style="background:#FFD700;color:#000">📞 اتصال</a><a href="https://wa.me/201150044251?text=عايز استفسر عن Range Rover" target="_blank" style="background:#00C853;color:#fff">💬 WhatsApp</a><a href="https://www.snapchat.com/add/mzaza506" target="_blank" style="background:#FFEB3B;color:#000">👻 Snapchat</a><a href="facetime:+201110840020" target="_blank" style="background:#00C853;color:#fff">📱 FaceTime</a></div></div></div>
+
+</div></div>
+
+<div class="lightbox" id="lightbox">
+  <span class="close">×</span>
+  <span class="arrow prev">❮</span>
+  <img id="lightbox-img">
+  <span class="arrow next">❯</span>
+</div>
+
+<footer>© 2026 ZAZA VIP CARS. جميع الحقوق محفوظة</footer>
+
+<script>
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+music.src = "bg-music.mp3";
+
+function toggleMusic(){
+  if(music.paused){
+    music.volume = 0.2;
+    music.play();
+    musicBtn.innerHTML = '🔊';
+    musicBtn.classList.remove('off');
+  }else{
+    music.pause();
+    musicBtn.innerHTML = '🔇';
+    musicBtn.classList.add('off');
+  }
+}
+
+let currentImages=[],currentIndex=0,activeFilter='all';const gallery=document.getElementById('gallery'),searchInput=document.getElementById('searchInput');document.querySelectorAll('.filters button').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeFilter=btn.dataset.filter;applyFilters()})});searchInput.addEventListener('keyup',applyFilters);function applyFilters(){let search=searchInput.value.toLowerCase();document.querySelectorAll('.car-card').forEach(card=>{let name=card.getAttribute('data-name').toLowerCase();let matchSearch=name.includes(search);let matchCat=activeFilter==='all'||card.classList.contains(activeFilter);if(matchSearch&&matchCat){card.classList.add('show')}else{card.classList.remove('show')}})}
+function playVideo(element,videoId){element.outerHTML=`<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&rel=0" title="Car Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:220px; border:0;"></iframe>`}
+function toggleMenu(e,carName){e.stopPropagation();document.querySelectorAll('.contact-menu').forEach(m=>m.classList.remove('show'));e.target.nextElementSibling.classList.add('show')}
+document.addEventListener('click',()=>{document.querySelectorAll('.contact-menu').forEach(m=>m.classList.remove('show'))})
+const lightbox=document.getElementById('lightbox'),lightboxImg=document.getElementById('lightbox-img');gallery.addEventListener('click',e=>{if(e.target.tagName==='IMG'&&!e.target.closest('.video-thumb')){openLightbox(e.target)}});function openLightbox(img){currentImages=Array.from(document.querySelectorAll('.car-card.show img'));currentIndex=currentImages.indexOf(img);lightboxImg.src=img.src;lightbox.style.display='flex'}function closeLightbox(){lightbox.style.display='none'}function changeImage(dir){currentIndex+=dir;if(currentIndex<0)currentIndex=currentImages.length-1;if(currentIndex>=currentImages.length)currentIndex=0;lightboxImg.src=currentImages[currentIndex].src}document.querySelector('.close').onclick=closeLightbox;document.querySelector('.prev').onclick=()=>changeImage(-1);document.querySelector('.next').onclick=()=>changeImage(1);lightbox.onclick=e=>{if(e.target===lightbox)closeLightbox()};document.addEventListener('keydown',e=>{if(lightbox.style.display==='flex'){if(e.key==='ArrowRight')changeImage(1);if(e.key==='ArrowLeft')changeImage(-1);if(e.key==='Escape')closeLightbox()}})
+</script>
+</body>
+</html>
